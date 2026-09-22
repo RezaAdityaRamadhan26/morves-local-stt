@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from morves_stt.config import load_yaml, merge_configs
 
 
@@ -19,7 +21,7 @@ def test_load_yaml_ok(tmp_path):
 
 
 def test_merge_configs_nested():
-    base = {"audio": {"sr": 16000, "ch": 1}, "model": {"id": "base"}}
+    base: dict[str, Any] = {"audio": {"sr": 16000, "ch": 1}, "model": {"id": "base"}}
     over = {"audio": {"sr": 8000}, "extra": True}
     merged = merge_configs(base, over)
     assert merged["audio"] == {"sr": 8000, "ch": 1}

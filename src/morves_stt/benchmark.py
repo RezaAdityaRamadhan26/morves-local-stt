@@ -13,6 +13,7 @@ from typing import Any
 from morves_stt.dataset import ManifestEntry
 from morves_stt.inference import SpeechToTextModel, TranscriptionResult
 from morves_stt.metrics import TermProfile, UtteranceMetrics, evaluate_utterance
+from morves_stt.semantic import semantic_scores
 
 
 @dataclass
@@ -26,6 +27,8 @@ class UtteranceRecord:
     hypothesis: str
     metrics: UtteranceMetrics
     audio_path: str
+    recording_profile: str | None = None
+    semantic: dict[str, float | None] = field(default_factory=dict)
 
 
 @dataclass
@@ -95,14 +98,35 @@ def summarize(result: BenchmarkResult) -> dict[str, Any]:
         for s, rs in sorted(speakers.items())
     }
 
-    # Critical confusion counts
+    # Critical confusion counts (global, per speaker, per recording profile)
     confusions: dict[str, dict[str, int]] = {}
+    by_speaker: dict[str, dict[str, dict[str, int]]] = {}
+    by_profile: dict[str, dict[str, dict[str, int]]] = {}
+
+    def _bump(target: dict, ref: str, hyp: str) -> None:
+        target.setdefault(ref, {})
+        target[ref][hyp] = target[ref].get(hyp, 0) + 1
+
     for r in records:
         for ev in r.metrics.critical_events:
-            confusions.setdefault(ev.reference_term, {})
-            confusions[ev.reference_term][ev.hypothesis_term or "<deleted>"] = (
-                confusions[ev.reference_term].get(ev.hypothesis_term or "<deleted>", 0) + 1
+            hyp_term = ev.hypothesis_term or "<deleted>"
+            _bump(confusions, ev.reference_term, hyp_term)
+            _bump(by_speaker.setdefault(r.speaker_id, {}), ev.reference_term, hyp_term)
+            _bump(
+                by_profile.setdefault(r.recording_profile or "(unset)", {}),
+                ev.reference_term,
+                hyp_term,
             )
+
+    def _semantic_accuracy(attr: str) -> float | None:
+        matched = 0.0
+        counted = 0
+        for r in records:
+            score = r.semantic.get(attr)
+            if score is not None:
+                matched += score
+                counted += 1
+        return (matched / counted) if counted else None
 
     return {
         "model_id": result.model_id,
@@ -118,7 +142,12 @@ def summarize(result: BenchmarkResult) -> dict[str, Any]:
         "currency_term_accuracy": _aggregate_scores(records, "currency_score")["accuracy"],
         "amount_token_accuracy": _aggregate_scores(records, "amount_score")["accuracy"],
         "date_token_accuracy": _aggregate_scores(records, "date_score")["accuracy"],
+        "amount_semantic_accuracy": _semantic_accuracy("amount_semantic"),
+        "date_semantic_accuracy": _semantic_accuracy("date_semantic"),
+        "currency_semantic_accuracy": _semantic_accuracy("currency_semantic"),
         "critical_term_errors": confusions,
+        "critical_term_errors_by_speaker": by_speaker,
+        "critical_term_errors_by_profile": by_profile,
         "latency_ms": {
             "mean": mean(latencies) if latencies else None,
             "p50": _percentile(latencies, 0.50),
@@ -198,6 +227,8 @@ def run_benchmark(
                 hypothesis=hyp.text,
                 metrics=metrics,
                 audio_path=entry.audio,
+                recording_profile=entry.recording_profile,
+                semantic=semantic_scores(entry.text, hyp.text),
             )
         )
 
@@ -245,6 +276,8 @@ def write_reports(
                 "wer": r.metrics.wer,
                 "cer": r.metrics.cer,
                 "exact_match": r.metrics.exact_match,
+                "semantic": r.semantic,
+                "recording_profile": r.recording_profile,
                 "critical_events": [asdict(e) for e in r.metrics.critical_events],
             }
             for r in result.records
@@ -265,8 +298,11 @@ def write_reports(
         f"- Entity accuracy: {summary['entity_term_accuracy']}",
         f"- Financial term accuracy: {summary['financial_term_accuracy']}",
         f"- Currency accuracy: {summary['currency_term_accuracy']}",
-        f"- Amount accuracy: {summary['amount_token_accuracy']}",
-        f"- Date accuracy: {summary['date_token_accuracy']}",
+        f"- Amount accuracy (strict): {summary['amount_token_accuracy']}",
+        f"- Date accuracy (strict): {summary['date_token_accuracy']}",
+        f"- Amount semantic accuracy: {summary['amount_semantic_accuracy']}",
+        f"- Date semantic accuracy: {summary['date_semantic_accuracy']}",
+        f"- Currency semantic accuracy: {summary['currency_semantic_accuracy']}",
         f"- Latency ms (mean/p50/p95): {summary['latency_ms']}",
         f"- RTF (mean): {summary['real_time_factor_mean']}",
         "",

@@ -11,6 +11,19 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 
 from morves_stt.dataset import DOMAIN_TAXONOMY, ManifestEntry
+from morves_stt.normalize import normalize_for_metric, tokenize
+
+
+def _term_present(term: str, words: set[str]) -> bool:
+    """Multiword terms match as contiguous bigram-ish presence on token sets.
+
+    For 2-word terms both tokens must appear; single tokens match directly.
+    """
+    parts = tuple(tokenize(normalize_for_metric(term)))
+    if not parts:
+        return False
+    return all(p in words for p in parts)
+
 
 # STT-1 pilot floors (see docs/STT-1-PILOT-DATASET-PLAN.md).
 DEFAULT_MIN_SPEAKERS = 4
@@ -38,6 +51,8 @@ class PilotDatasetStats:
     missing_audio: list[str] = field(default_factory=list)
     speaker_overlap: list[str] = field(default_factory=list)
     schema_errors: list[str] = field(default_factory=list)
+    # anchor term -> speakers whose utterances contain the term
+    anchor_term_speakers: dict[str, set[str]] = field(default_factory=dict)
 
 
 @dataclass
@@ -56,12 +71,14 @@ def collect_stats(
     missing_audio: list[str] | None = None,
     speaker_overlap: list[str] | None = None,
     schema_errors: list[str] | None = None,
+    anchor_terms: list[str] | None = None,
 ) -> PilotDatasetStats:
     """Aggregate pilot statistics from manifest entries.
 
     ``missing_audio``/``speaker_overlap``/``schema_errors`` are collected by the
     caller (filesystem / split checks) and passed through so the verdict sees
-    everything in one place.
+    everything in one place. ``anchor_terms`` enables cross-speaker critical
+    term coverage tracking (STT-1C shared anchor set).
     """
     per_speaker_sec: dict[str, float] = defaultdict(float)
     per_speaker_n: Counter[str] = Counter()
@@ -69,6 +86,7 @@ def collect_stats(
     rec_profiles: Counter[str] = Counter()
     noise_prof: Counter[str] = Counter()
     languages: Counter[str] = Counter()
+    anchor: dict[str, set[str]] = {t: set() for t in (anchor_terms or [])}
 
     for e in entries:
         per_speaker_sec[e.speaker_id] += e.duration_sec
@@ -77,6 +95,11 @@ def collect_stats(
         languages[e.language] += 1
         rec_profiles[e.recording_profile or "(unset)"] += 1
         noise_prof[e.noise_profile or "(unset)"] += 1
+        if anchor:
+            words = set(tokenize(normalize_for_metric(e.text)))
+            for term in anchor:
+                if _term_present(term, words):
+                    anchor[term].add(e.speaker_id)
 
     test_entries = test_entries or []
     synthetic_in_test = sum(1 for e in test_entries if e.source == "synthetic")
@@ -95,6 +118,7 @@ def collect_stats(
         missing_audio=sorted(missing_audio or []),
         speaker_overlap=sorted(speaker_overlap or []),
         schema_errors=sorted(schema_errors or []),
+        anchor_term_speakers=anchor,
     )
 
 
@@ -164,6 +188,18 @@ def evaluate_readiness(
     unknown_domains = [d for d in stats.domain_counts if d not in DOMAIN_TAXONOMY]
     if unknown_domains:
         deficits.append(f"unknown domains outside taxonomy: {', '.join(unknown_domains)}")
+
+    if stats.anchor_term_speakers:
+        thin_anchor = sorted(
+            f"{term} ({len(speakers)})"
+            for term, speakers in stats.anchor_term_speakers.items()
+            if len(speakers) < min_speakers
+        )
+        if thin_anchor:
+            deficits.append(
+                f"anchor terms covered by fewer than {min_speakers} speakers: "
+                f"{', '.join(thin_anchor)}"
+            )
 
     ready = not deficits
     return ReadinessResult(

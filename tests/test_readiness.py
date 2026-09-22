@@ -21,10 +21,11 @@ def make_entry(
     language: str = "id",
     recording_profile: str | None = "laptop_quiet",
     noise_profile: str | None = "quiet",
+    text: str = "contoh",
 ) -> ManifestEntry:
     return ManifestEntry(
         audio=f"processed/{speaker}/000001.wav",
-        text="contoh",
+        text=text,
         language=language,
         speaker_id=speaker,
         duration_sec=duration,
@@ -167,3 +168,37 @@ def test_floors_are_overridable():
     assert result.ready is False
     assert len(result.deficits) == 1
     assert "domains not covered" in result.deficits[0]
+
+
+def test_anchor_terms_without_full_speaker_coverage_block():
+    # build_full_pilot texts ("contoh") never contain anchor terms.
+    stats = collect_stats(build_full_pilot(), anchor_terms=["medita", "neraca saldo"])
+    assert stats.anchor_term_speakers == {"medita": set(), "neraca saldo": set()}
+    result = evaluate_readiness(stats)
+    assert result.ready is False
+    assert any(
+        d.startswith("anchor terms covered by fewer than 4 speakers") for d in result.deficits
+    )
+
+
+def test_anchor_terms_spoken_by_every_speaker_pass():
+    # Every speaker says every anchor (incl. the multiword one) in each clip.
+    entries = [
+        make_entry(
+            speaker=f"spk_{i:03d}",
+            domain=domain,
+            text="tampilkan neraca saldo piutang medita",
+            recording_profile="laptop_quiet",
+            noise_profile="quiet",
+        )
+        for i in (1, 2, 3, 4)
+        for domain in DOMAIN_TAXONOMY
+    ]
+    stats = collect_stats(entries, anchor_terms=["medita", "neraca saldo"])
+    assert stats.anchor_term_speakers == {
+        "medita": {"spk_001", "spk_002", "spk_003", "spk_004"},
+        "neraca saldo": {"spk_001", "spk_002", "spk_003", "spk_004"},
+    }
+    result = evaluate_readiness(stats)
+    assert result.ready is True
+    assert result.verdict == READY_VERDICT
