@@ -5,6 +5,10 @@ Date: 2026-09-22
 ## Repository
 
 - **Repository**: `morves-local-stt` at `E:\Reza(Jangan Dihapus!!!\morves-local-stt` (sibling of `morves-finance-core`; no crossover)
+  - Relocation note (STT-1A, 2026-09-22): the canonical location is now
+    `E:\Reza(Jangan Dihapus!!!)\morves-local-stt`. The path above is the
+    historical STT-0 working location, preserved for accuracy — see
+    [REPOSITORY-LOCATION.md](REPOSITORY-LOCATION.md).
 - **Branch**: `phase/stt-0-bootstrap` (from empty `main`)
 - **Starting HEAD**: none (repository had zero commits; `main` unborn)
 - **Final HEAD**: `c9a909b` — this closure report commits on top (run `git log -1`)

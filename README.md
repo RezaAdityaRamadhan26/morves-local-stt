@@ -57,14 +57,22 @@ Raw/processed audio is **never committed**. Speakers are pseudonymous
 [datasets/README.md](datasets/README.md) and
 [docs/DATASET-GUIDE.md](docs/DATASET-GUIDE.md).
 
-## Preparing Data
+## Preparing Data (STT-1 pilot)
+
+Recording pack and session design: [datasets/recording-pack/README.md](datasets/recording-pack/README.md)
+and [docs/STT-1-PILOT-DATASET-PLAN.md](docs/STT-1-PILOT-DATASET-PLAN.md).
 
 ```bash
 python scripts/normalize_audio.py datasets/raw --out-dir datasets/processed
 # create datasets/transcripts/records.csv (audio,text,speaker_id,...)
 python scripts/prepare_manifest.py --csv datasets/transcripts/records.csv
-python scripts/validate_dataset.py
+python scripts/validate_dataset.py   # single readiness command + verdict
 ```
+
+`validate_dataset.py` prints `PILOT DATASET READY FOR STT-2` only when all
+pilot floors are met (≥4 speakers, ≥1 h total, all 15 domains, zero speaker
+leakage, real speech in test); otherwise `PILOT DATASET NOT READY` with the
+exact deficits.
 
 ## Running Tests
 
@@ -108,7 +116,7 @@ mypy
 | Stage | Scope |
 |---|---|
 | STT-0 | bootstrap, hardware audit, dataset contract, eval harness, integration contract (this repo state) |
-| STT-1 | dataset pipeline hardening on real recordings |
+| STT-1 | dataset pipeline hardening on real recordings (recording pack ready; status: WAITING FOR HUMAN RECORDINGS) |
 | STT-2 | pretrained baseline benchmark on pilot dataset |
 | STT-3 | domain dataset collection (speakers/devices/noise) |
 | STT-4 | fine-tuning (LoRA on whisper-small; see docs/BASELINE-RESEARCH.md) |
