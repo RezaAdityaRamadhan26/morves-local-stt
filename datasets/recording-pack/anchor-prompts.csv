@@ -1,0 +1,37 @@
+prompt_id,text,covers
+pp_018,"Cari menu neraca saldo.",neraca saldo
+pp_026,"Tampilkan arus kas bulan ini.",arus kas
+pp_030,"Coba tampilin arus kas proyek Medita.",medita;arus kas
+pp_031,"Berapa saldo kas di rekening BCA?",bca
+pp_036,"Eh, tunggu, arus kas Morves Finance ya, bukan Medita.",morves;medita
+pp_037,"Tampilkan transaksi rekening BCA tanggal dua belas September.",bca
+pp_039,"Cari transaksi atas nama Medita.",medita
+pp_044,"Filter transaksi di atas lima juta rupiah.",juta;rupiah
+pp_045,"Transaksi rekening Mandiri minggu ini aja.",mandiri
+pp_046,"Catat jurnal: debit kas lima juta, kredit pendapatan lima juta.",debit;kredit;jurnal;juta
+pp_048,"Eh, itu debit atau kredit tadi?",debit;kredit
+pp_049,"Tampilkan piutang Medita bulan ini.",piutang;medita
+pp_052,"Tampilkan invoice yang overdue lebih dari tiga puluh hari.",invoice;overdue
+pp_054,"Piutang kita ke Creatifyl ada berapa?",piutang;creatifyl
+pp_055,"Coba lihat invoice yang overdue.",invoice;overdue
+pp_060,"Berapa piutang yang outstanding di kuartal dua?",piutang;outstanding
+pp_061,"Berapa utang yang jatuh tempo minggu ini?",utang
+pp_063,"Tampilkan utang Creatifyl yang belum lunas.",utang;creatifyl
+pp_073,"Apakah ada transaksi antarperusahaan yang belum cocok?",antarperusahaan
+pp_074,"Tampilkan eliminasi antarperusahaan bulan ini.",antarperusahaan
+pp_076,"Transaksi intercompany minggu ini ada berapa?",intercompany
+pp_081,"Eh, antarperusahaan Medita aja dulu.",antarperusahaan;medita
+pp_085,"Tampilkan neraca saldo per akhir bulan.",neraca saldo
+pp_086,"Buat laporan laba rugi bulan ini.",laba rugi
+pp_088,"Berapa ekuitas Morves akhir tahun lalu?",morves;ekuitas
+pp_099,"Proyek Creatifyl sudah lewat budget belum?",creatifyl
+pp_103,"Coba lihat margin kotor proyek Morves.",morves
+pp_112,"Tampilkan mutasi rekening Mandiri atas nama Medita Solusi Digital.",mandiri;medita
+pp_114,"Cari counterparty dengan nama Creatifyl.",creatifyl
+pp_121,"Berapa kurs USD hari ini?",usd
+pp_123,"Kurs IDR ke USD sekarang berapa?",idr;usd
+pp_127,"Eh, maksud saya USD, bukan IDR.",usd;idr
+pp_138,"Beban server delapan ratus lima puluh ribu per bulan.",ribu
+pp_133,"Total pendapatan dua ratus lima puluh juta rupiah.",juta;rupiah
+pp_134,"Laba bersih satu koma lima miliar rupiah.",miliar
+pp_136,"Bukan juta, miliar.",juta;miliar

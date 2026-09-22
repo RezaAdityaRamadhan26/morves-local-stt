@@ -1,0 +1,31 @@
+prompt_id,domain,text
+p001,receivable,Tampilkan piutang Medita bulan ini.
+p002,payable,Berapa total utang Morves yang jatuh tempo minggu ini?
+p003,management,Coba lihat pendapatan Creatifyl bulan September.
+p004,management,Bandingkan pendapatan Medita dengan Creatifyl bulan ini.
+p005,cash_flow,Berapa saldo kas Morves sekarang?
+p006,transaction,Tampilkan transaksi rekening BCA tanggal dua belas September.
+p007,transaction,Ada transaksi di Bank Mandiri sebesar dua ratus lima puluh juta rupiah?
+p008,management,Berapa pengeluaran untuk infrastructure and server bulan ini?
+p009,receivable,Tampilkan invoice yang overdue lebih dari tiga puluh hari.
+p010,receivable,Berapa total outstanding piutang Medita saat ini?
+p011,reporting,Tampilkan neraca saldo Morves untuk bulan Desember.
+p012,reporting,Coba buka laporan laba rugi dari Januari sampai September.
+p013,reporting,Berapa total aset, liabilitas, dan ekuitas Morves?
+p014,cash_flow,Tampilkan arus kas dari tanggal satu September sampai tiga puluh September.
+p015,project,Project mana yang punya margin paling tinggi bulan ini?
+p016,project,Ada project yang marginnya negatif nggak?
+p017,intercompany,Tampilkan transaksi antarperusahaan yang belum cocok.
+p018,intercompany,Apakah ada eliminasi intercompany yang masih bermasalah?
+p019,transaction,Berapa debit kas hari ini dan berapa kreditnya?
+p020,transaction,Tampilkan jurnal dengan nilai lima juta rupiah.
+p021,transaction,Cari transaksi senilai lima ratus ribu rupiah.
+p022,transaction,Ada transaksi sebesar satu koma lima miliar rupiah bulan ini?
+p023,currency_fx,Tampilkan transaksi dalam mata uang IDR dan USD secara terpisah.
+p024,currency_fx,Berapa nilai piutang dalam rupiah dan berapa yang dalam dolar?
+p025,receivable,Piutang Medita sekarang berapa, bro?
+p026,cash_flow,Tampilin pengeluaran Morves minggu ini dong.
+p027,receivable,Coba cek invoice Creatifyl yang belum dibayar.
+p028,cash_flow,Bandingin cash flow Medita sama Creatifyl.
+p029,assistant_query,Ada anomali pengeluaran yang kelihatan nggak biasa bulan ini?
+p030,reporting,Buat ringkasan kondisi keuangan Morves untuk periode satu Januari sampai tiga puluh satu Desember dua ribu dua puluh enam.

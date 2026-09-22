@@ -1,7 +1,7 @@
 # STT-1 Pilot Dataset Plan
 
 Date: 2026-09-22
-Status: **RECORDING PACK READY — WAITING FOR HUMAN RECORDINGS**
+Status: **STT-1B SANITY BATCH INGESTED (1 speaker, 29/30) — WAITING FOR MORE HUMAN RECORDINGS**
 
 This plan prepares (and only prepares) the STT-1 pilot dataset. **No training
 happens in STT-1**: no LoRA, no PEFT, no full fine-tune, no STT-4. The stage
@@ -72,6 +72,70 @@ noise_profile, device, prompts_range, consent_confirmed, notes`).
   terms inline.
 - Speaking pace: normal. No over-articulation, no slowdown.
 
+## Shared anchor set (STT-1C)
+
+`datasets/recording-pack/anchor-prompts.csv` — 36 prompts (~30–40 target)
+that **every speaker records**, whatever else their assignment covers. The
+`covers` column lists the 25 critical terms each anchor protects:
+Morves, Medita, Creatifyl, piutang, utang, debit, kredit, ribu, juta, miliar,
+IDR, USD, BCA, Mandiri, intercompany, antarperusahaan, neraca saldo,
+laba rugi, arus kas, invoice, outstanding, overdue (plus rupiah, ekuitas,
+jurnal, and near-name contrasts). The readiness validator reports per-term
+speaker coverage and blocks STT-2 while any anchor term is spoken by fewer
+than the minimum speaker count.
+
+## Speaker-disjoint split proposal (STT-1C)
+
+| Split | Speakers |
+|---|---|
+| TRAIN | spk_001–spk_004 |
+| VALIDATION | spk_005 |
+| TEST | spk_006 |
+
+Speaker overlap across splits is a hard deficit: `validate_dataset.py`
+reports leakage and the verdict flips to NOT READY. The split is a proposal —
+final assignment happens when all 6 speakers exist, but speakers may never
+appear in two splits.
+
+## Semantic diagnostics (STT-1C) — STRICT metrics stay authoritative
+
+`src/morves_stt/semantic.py` adds *separate* diagnostic metrics:
+amount/date/currency semantic accuracy, where "dua ratus lima puluh juta" ≡
+"250 juta" and "lima juta" ≢ "lima miliar". These never replace strict
+WER/CER/term accuracies and never hide transcript errors: reports always
+carry both STRICT and SEMANTIC numbers. **Entity metrics are never
+semantically normalized** — Medita → media, Morves → marfes,
+Creatifyl → kreatif remain strict errors, always.
+
+## Ingesting speaker batches (STT-1C)
+
+```bash
+# opaque filenames (e.g. Telegram dumps): transcribe-assisted mapping,
+# dry-run first (prints the mapping table), then --apply to canonicalize:
+python scripts/ingest_speaker_batch.py --speaker spk_002 --input-dir <dir> \
+    [--recording-profile phone_quiet] [--noise-profile quiet]
+
+# files already named <prompt_id>.<ext> (e.g. the spk_001 p017 recovery take):
+python scripts/ingest_speaker_batch.py --speaker spk_001 \
+    --input-dir datasets/raw/spk_001/recovery --direct --apply
+```
+
+Mapping policy (unit-tested in `tests/test_mapping.py`): normalized-CER cost
+matrix, greedy unique assignment, confidence HIGH/MEDIUM accepted, LOW/AMBIGUOUS
+blocked from canonical rename. Private per-speaker quality reports:
+
+```bash
+python scripts/data_quality.py --extra-manifest evaluation/private-manifest.jsonl \
+    --references datasets/recording-pack/sanity-prompts.csv
+```
+
+The readiness command now accepts extra manifests (private sanity batches
+never become production splits):
+
+```bash
+python scripts/validate_dataset.py --extra-manifest evaluation/private-manifest.jsonl
+```
+
 ## Directories and schema
 
 ```
@@ -127,9 +191,14 @@ inspected/overridden via CLI flags for experimentation, never to fake a pass.
 
 ## Honest status reporting
 
-Until real recordings exist, the validator verdict is
+Until enough real recordings exist, the validator verdict is
 `PILOT DATASET NOT READY` with a `WAITING FOR HUMAN RECORDINGS` deficit.
-The current state of this repository contains **zero human recordings**;
-no speaker/hour/quality claim is made. Quality benchmarking starts at STT-2
-(faster-whisper `base` + `small` only) once the verdict flips to
-`PILOT DATASET READY FOR STT-2`.
+Current reality: one speaker (spk_001) has ingested the 30-prompt sanity
+batch (29/30 prompts; **p017 is missing and must be re-recorded by the
+speaker** into `datasets/raw/spk_001/recovery/p017.ogg` — never fabricated).
+No speaker/hour/quality claim beyond that is made. The final quality
+benchmark happens at STT-2 (faster-whisper `base` + `small` only) once the
+verdict flips to `PILOT DATASET READY FOR STT-2`.
+
+Participant-facing instructions (non-engineers):
+[datasets/recording-pack/PARTICIPANT-GUIDE.md](../datasets/recording-pack/PARTICIPANT-GUIDE.md).

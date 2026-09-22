@@ -15,7 +15,9 @@ This repository is **completely separate** from `morves-finance-core`.
   faster-whisper/CTranslate2 int8 today; fine-tuned domain model planned)
 - A dataset pipeline with a strict privacy model and speaker-independent splits
 - A domain-aware evaluation harness (WER/CER + entity/finance/amount/date/
-  currency accuracies + critical-confusion tracking)
+  currency accuracies + critical-confusion tracking, plus semantic
+  amount/date/currency diagnostics that compare numeric meaning — STRICT
+  metrics always stay authoritative and are reported alongside)
 - A minimal local HTTP transcription service
 
 ## What it is NOT
@@ -61,18 +63,29 @@ Raw/processed audio is **never committed**. Speakers are pseudonymous
 
 Recording pack and session design: [datasets/recording-pack/README.md](datasets/recording-pack/README.md)
 and [docs/STT-1-PILOT-DATASET-PLAN.md](docs/STT-1-PILOT-DATASET-PLAN.md).
+Participant instructions (non-engineers):
+[datasets/recording-pack/PARTICIPANT-GUIDE.md](datasets/recording-pack/PARTICIPANT-GUIDE.md).
 
 ```bash
+# per speaker batch: transcription-assisted mapping, dry-run then --apply
+python scripts/ingest_speaker_batch.py --speaker spk_002 --input-dir <recordings>
+
+# already-named recovery takes (e.g. missing p017):
+python scripts/ingest_speaker_batch.py --speaker spk_001 \
+    --input-dir datasets/raw/spk_001/recovery --direct --apply
+
+# manual path (normalize + records.csv) still works:
 python scripts/normalize_audio.py datasets/raw --out-dir datasets/processed
-# create datasets/transcripts/records.csv (audio,text,speaker_id,...)
 python scripts/prepare_manifest.py --csv datasets/transcripts/records.csv
-python scripts/validate_dataset.py   # single readiness command + verdict
+
+python scripts/validate_dataset.py --extra-manifest evaluation/private-manifest.jsonl
 ```
 
 `validate_dataset.py` prints `PILOT DATASET READY FOR STT-2` only when all
-pilot floors are met (≥4 speakers, ≥1 h total, all 15 domains, zero speaker
-leakage, real speech in test); otherwise `PILOT DATASET NOT READY` with the
-exact deficits.
+pilot floors are met (≥4 speakers, ≥1 h total, all 15 domains, anchor terms
+spoken by enough speakers, zero speaker leakage, real speech in test);
+otherwise `PILOT DATASET NOT READY` with the exact deficits. Per-speaker
+private quality reports: `python scripts/data_quality.py --extra-manifest <manifest>`.
 
 ## Running Tests
 
