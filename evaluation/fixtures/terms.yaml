@@ -1,0 +1,133 @@
+# Critical evaluation terms for Morves Finance domain ASR.
+# Used by morves_stt.metrics to compute domain-aware accuracies and critical confusion counts.
+
+entities:
+  - Morves
+  - Morves Finance
+  - Medita
+  - Medita Solusi Digital
+  - Creatifyl
+
+financial_terms:
+  - piutang
+  - utang
+  - pendapatan
+  - pengeluaran
+  - arus kas
+  - neraca
+  - neraca saldo
+  - laba rugi
+  - ekuitas
+  - liabilitas
+  - aset
+  - beban
+  - modal
+  - jurnal
+  - jurnal umum
+  - debit
+  - kredit
+  - transaksi
+  - rekening
+  - bank
+  - kas
+  - invoice
+  - tagihan
+  - jatuh tempo
+  - outstanding
+  - overdue
+  - antarperusahaan
+  - intercompany
+  - konsolidasi
+  - eliminasi
+  - project
+  - proyek
+  - margin
+  - profitabilitas
+  - saldo
+  - buku besar
+  - rekonsiliasi
+
+currencies:
+  - idr
+  - usd
+  - rupiah
+  - dolar
+
+amount_tokens:
+  - seratus
+  - dua
+  - tiga
+  - empat
+  - lima
+  - enam
+  - tujuh
+  - delapan
+  - sembilan
+  - sepuluh
+  - sebelas
+  - belas
+  - puluh
+  - ratus
+  - ribu
+  - juta
+  - miliar
+  - triliun
+  - koma
+  - nol
+
+date_tokens:
+  - januari
+  - februari
+  - maret
+  - april
+  - mei
+  - juni
+  - juli
+  - agustus
+  - september
+  - oktober
+  - november
+  - desember
+  - senin
+  - selasa
+  - rabu
+  - kamis
+  - jumat
+  - sabtu
+  - minggu
+  - tanggal
+  - hari
+  - bulan
+  - tahun
+  - kemarin
+  - besok
+
+# Critical confusion pairs: reference -> set of forbidden / dangerous substitutions.
+# A substitution here is penalized as a CRITICAL DOMAIN ERROR.
+critical_confusions:
+  - reference: "medita"
+    forbidden: ["media", "medika", "mita", "berita"]
+  - reference: "morves"
+    forbidden: ["moris", "mores", "morfis", "modus"]
+  - reference: "creatifyl"
+    forbidden: ["kreatif", "kreatifil", "kreatifitas", "creative"]
+  - reference: "piutang"
+    forbidden: ["hutang", "utang", "bintang", "petang"]
+  - reference: "utang"
+    forbidden: ["piutang", "udang", "untung"]
+  - reference: "debit"
+    forbidden: ["kredit", "debu", "debet"]
+  - reference: "kredit"
+    forbidden: ["debit", "kerikil", "kredibilitas"]
+  - reference: "juta"
+    forbidden: ["miliar", "ribu", "triliun"]
+  - reference: "miliar"
+    forbidden: ["juta", "ribu", "triliun"]
+  - reference: "idr"
+    forbidden: ["usd"]
+  - reference: "usd"
+    forbidden: ["idr"]
+  - reference: "rupiah"
+    forbidden: ["dolar", "dollar"]
+  - reference: "dolar"
+    forbidden: ["rupiah"]

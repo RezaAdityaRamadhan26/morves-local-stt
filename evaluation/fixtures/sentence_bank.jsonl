@@ -1,0 +1,20 @@
+{"id": "sb_001", "domain": "receivable", "text": "Tampilkan piutang Medita bulan ini."}
+{"id": "sb_002", "domain": "payable", "text": "Berapa utang yang jatuh tempo minggu ini?"}
+{"id": "sb_003", "domain": "transaction", "text": "Tampilkan transaksi rekening BCA tanggal dua belas September."}
+{"id": "sb_004", "domain": "reporting", "text": "Berapa pendapatan Morves bulan ini?"}
+{"id": "sb_005", "domain": "reporting", "text": "Bandingkan pendapatan Medita dan Creatifyl."}
+{"id": "sb_006", "domain": "project", "text": "Project mana yang marginnya paling rendah?"}
+{"id": "sb_007", "domain": "intercompany", "text": "Apakah ada transaksi antarperusahaan yang belum cocok?"}
+{"id": "sb_008", "domain": "cash_flow", "text": "Berapa saldo kas sekarang?"}
+{"id": "sb_009", "domain": "receivable", "text": "Tampilkan invoice yang overdue lebih dari tiga puluh hari."}
+{"id": "sb_010", "domain": "management", "text": "Berapa pengeluaran server bulan ini?"}
+{"id": "sb_011", "domain": "transaction", "text": "Catat jurnal penyesuaian debit beban sewa kredit kas sebesar lima juta rupiah."}
+{"id": "sb_012", "domain": "currency_fx", "text": "Konversi seratus ribu USD ke IDR menggunakan kurs hari ini."}
+{"id": "sb_013", "domain": "amount", "text": "Total aset lancar mencapai dua ratus lima puluh juta lima ratus ribu rupiah."}
+{"id": "sb_014", "domain": "amount", "text": "Laba bersih kuartal dua tercatat satu koma lima miliar rupiah."}
+{"id": "sb_015", "domain": "date_time", "text": "Tutup buku periode dua puluh dua September dua ribu dua puluh enam."}
+{"id": "sb_016", "domain": "counterparty", "text": "Tampilkan mutasi rekening Mandiri atas nama Medita Solusi Digital."}
+{"id": "sb_017", "domain": "navigation", "text": "Buka laporan laba rugi konsolidasi tahun berjalan."}
+{"id": "sb_018", "domain": "assistant_query", "text": "Berapa rasio liabilitas terhadap ekuitas Morves Finance per akhir Agustus?"}
+{"id": "sb_019", "domain": "intercompany", "text": "Lakukan eliminasi saldo piutang antarperusahaan Medita dan Creatifyl."}
+{"id": "sb_020", "domain": "general", "text": "Cari neraca saldo bulan lalu yang belum direkonsiliasi."}
