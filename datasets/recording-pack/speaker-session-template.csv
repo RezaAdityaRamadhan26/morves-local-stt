@@ -1,0 +1,5 @@
+speaker_id,session_id,session_date,language,recording_profile,noise_profile,device,prompts_range,consent_confirmed,notes
+spk_001,sess_001,YYYY-MM-DD,id,laptop_quiet,quiet,laptop_builtin_mic,pp_001-pp_060,yes,(tempat/durasi sesi; JANGAN tulis nama asli)
+spk_002,sess_002,YYYY-MM-DD,id,phone_quiet,quiet,phone_builtin_mic,pp_061-pp_120,yes,
+spk_003,sess_003,YYYY-MM-DD,id,office_normal,ambient,laptop_builtin_mic,pp_121-pp_180,yes,
+spk_004,sess_004,YYYY-MM-DD,id,laptop_quiet,quiet,headset_mic,core+rotate,yes,

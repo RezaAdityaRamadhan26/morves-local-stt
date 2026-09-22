@@ -1,0 +1,2 @@
+audio,text,speaker_id,language,duration_sec,domain,source,recording_profile,noise_profile
+processed/spk_001/000001.wav,(contoh baris - ganti dengan transkrip sesungguhnya),spk_001,id,,general,recorded,laptop_quiet,quiet

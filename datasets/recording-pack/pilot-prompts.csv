@@ -1,0 +1,181 @@
+prompt_id,domain,text,style
+pp_001,general,"Halo, tes mikrofon satu dua tiga.",short
+pp_002,general,"Halo Morves, apa kamu bisa dengar saya?",question
+pp_003,general,"Terima kasih.",short
+pp_004,general,"Oke, lanjut.",short
+pp_005,general,"Eh sebentar, saya mau tanya dulu.",casual
+pp_006,general,"Tolong ulangi yang tadi.",casual
+pp_007,general,"Baik, saya mengerti.",formal
+pp_008,general,"Sekarang tanggal berapa?",question
+pp_009,general,"Hari ini hari Jumat, ya?",question
+pp_010,general,"Sebentar, saya cari dulu catatannya.",casual
+pp_011,general,"Sudah selesai?",short
+pp_012,general,"Bisa pakai bahasa Indonesia saja?",question
+pp_013,navigation,"Buka halaman utama.",short
+pp_014,navigation,"Balik ke dashboard.",casual
+pp_015,navigation,"Kembali ke menu sebelumnya.",formal
+pp_016,navigation,"Tampilin laporan arus kas.",casual
+pp_017,navigation,"Pindah ke tab transaksi.",formal
+pp_018,navigation,"Cari menu neraca saldo.",formal
+pp_019,navigation,"Ke bagian piutang, dong.",casual
+pp_020,navigation,"Buka pengaturan akun.",formal
+pp_021,navigation,"Scroll ke bawah sedikit.",casual
+pp_022,navigation,"Tutup panel kanan.",formal
+pp_023,navigation,"Eh, balik lagi ke laporan yang tadi.",casual
+pp_024,navigation,"Tampilkan sidebar laporan keuangan.",formal
+pp_025,cash_flow,"Berapa saldo kas sekarang?",question
+pp_026,cash_flow,"Tampilkan arus kas bulan ini.",formal
+pp_027,cash_flow,"Arus kas kuartal tiga gimana?",casual
+pp_028,cash_flow,"Kas masuk minggu ini ada berapa?",question
+pp_029,cash_flow,"Kas keluar bulan lalu berapa totalnya?",question
+pp_030,cash_flow,"Coba tampilin arus kas proyek Medita.",casual
+pp_031,cash_flow,"Berapa saldo kas di rekening BCA?",question
+pp_032,cash_flow,"Bandingkan arus kas bulan ini sama bulan lalu.",formal
+pp_033,cash_flow,"Arus kasnya positif atau negatif?",question
+pp_034,cash_flow,"Sisa anggaran kas kecil berapa?",question
+pp_035,cash_flow,"Tunjukkan proyeksi arus kas enam bulan ke depan.",formal
+pp_036,cash_flow,"Eh, tunggu, arus kas Morves Finance ya, bukan Medita.",casual
+pp_037,transaction,"Tampilkan transaksi rekening BCA tanggal dua belas September.",formal
+pp_038,transaction,"Transaksi hari ini ada berapa?",question
+pp_039,transaction,"Cari transaksi atas nama Medita.",formal
+pp_040,transaction,"Tampilkan semua transaksi bulan lalu.",formal
+pp_041,transaction,"Ada transaksi keluar kemarin?",question
+pp_042,transaction,"Transaction terakhir apa?",mixed
+pp_043,transaction,"Jurnal umum bulan ini ada berapa entry?",mixed
+pp_044,transaction,"Filter transaksi di atas lima juta rupiah.",formal
+pp_045,transaction,"Transaksi rekening Mandiri minggu ini aja.",casual
+pp_046,transaction,"Catat jurnal: debit kas lima juta, kredit pendapatan lima juta.",formal
+pp_047,transaction,"Tiga transaksi terakhir apa saja?",question
+pp_048,transaction,"Eh, itu debit atau kredit tadi?",casual
+pp_049,receivable,"Tampilkan piutang Medita bulan ini.",formal
+pp_050,receivable,"Piutang Medita sekarang berapa?",casual
+pp_051,receivable,"Berapa total piutang yang belum dibayar?",question
+pp_052,receivable,"Tampilkan invoice yang overdue lebih dari tiga puluh hari.",formal
+pp_053,receivable,"Invoice mana yang sudah jatuh tempo?",question
+pp_054,receivable,"Piutang kita ke Creatifyl ada berapa?",question
+pp_055,receivable,"Coba lihat invoice yang overdue.",casual
+pp_056,receivable,"Umur piutang Medita sudah berapa lama?",question
+pp_057,receivable,"Penerimaan piutang minggu ini ada?",question
+pp_058,receivable,"Tampilkan rincian piutang per konsumen.",formal
+pp_059,receivable,"Eh, piutangnya saja, jangan yang utang.",casual
+pp_060,receivable,"Berapa piutang yang outstanding di kuartal dua?",mixed
+pp_061,payable,"Berapa utang yang jatuh tempo minggu ini?",question
+pp_062,payable,"Utang ke supplier berapa totalnya?",question
+pp_063,payable,"Tampilkan utang Creatifyl yang belum lunas.",formal
+pp_064,payable,"Tagihan vendor bulan ini ada berapa?",question
+pp_065,payable,"Utang kita ke Medita ada?",question
+pp_066,payable,"Cek jatuh tempo utang bulan depan.",formal
+pp_067,payable,"Mana aja utang yang belum dibayar?",casual
+pp_068,payable,"Pembayaran utang tanggal dua puluh sudah dijurnal?",question
+pp_069,payable,"Eh itu utang atau piutang?",casual
+pp_070,payable,"Tampilkan jadwal pembayaran utang.",formal
+pp_071,payable,"Total utang usaha sekarang berapa?",question
+pp_072,payable,"Bayarin tagihan internet sekalian.",casual
+pp_073,intercompany,"Apakah ada transaksi antarperusahaan yang belum cocok?",formal
+pp_074,intercompany,"Tampilkan eliminasi antarperusahaan bulan ini.",formal
+pp_075,intercompany,"Saldo antarperusahaan Morves dan Medita cocok nggak?",casual
+pp_076,intercompany,"Transaksi intercompany minggu ini ada berapa?",mixed
+pp_077,intercompany,"Konsolidasi laporan antarperusahaan Morves dan Creatifyl.",formal
+pp_078,intercompany,"Eliminasi apa saja yang perlu disiapkan akhir bulan?",question
+pp_079,intercompany,"Cek selisih antarperusahaan.",casual
+pp_080,intercompany,"Laporan konsolidasi kuartal dua sudah jadi?",question
+pp_081,intercompany,"Eh, antarperusahaan Medita aja dulu.",casual
+pp_082,intercompany,"Berapa nilai eliminasi bulan September?",question
+pp_083,intercompany,"Transaksi antarperusahaan yang belum cocok itu yang mana?",question
+pp_084,intercompany,"Tampilkan neraca konsolidasi.",formal
+pp_085,reporting,"Tampilkan neraca saldo per akhir bulan.",formal
+pp_086,reporting,"Buat laporan laba rugi bulan ini.",formal
+pp_087,reporting,"Neraca bulan lalu gimana?",casual
+pp_088,reporting,"Berapa ekuitas Morves akhir tahun lalu?",question
+pp_089,reporting,"Total liabilitas sekarang berapa?",question
+pp_090,reporting,"Aset lancar bertambah atau berkurang?",question
+pp_091,reporting,"Laba rugi konsolidasi kuartal satu.",formal
+pp_092,reporting,"Bandingin laporan bulan ini sama bulan lalu.",casual
+pp_093,reporting,"Unduh neraca saldo format Excel.",formal
+pp_094,reporting,"Eh, laporan audited atau unaudited?",mixed
+pp_095,reporting,"Ringkasan keuangan tahun berjalan.",formal
+pp_096,reporting,"Berapa laba bersih tahun dua ribu dua puluh lima?",question
+pp_097,project,"Project mana yang marginnya paling rendah?",mixed
+pp_098,project,"Margin proyek Medita bulan ini berapa?",question
+pp_099,project,"Proyek Creatifyl sudah lewat budget belum?",mixed
+pp_100,project,"Tampilkan profitabilitas per proyek.",formal
+pp_101,project,"Proyek mana yang paling menguntungkan?",question
+pp_102,project,"Realisasi anggaran proyek server gimana?",question
+pp_103,project,"Coba lihat margin kotor proyek Morves.",casual
+pp_104,project,"Proyek yang rugi ada berapa?",question
+pp_105,project,"Eh, proyek Medita yang baru, bukan yang lama.",casual
+pp_106,project,"Bandingkan profitabilitas proyek A dan B.",formal
+pp_107,project,"Deadline proyek kapan?",casual
+pp_108,project,"Progress proyek sekarang berapa persen?",question
+pp_109,counterparty,"Siapa counterparty untuk invoice ini?",mixed
+pp_110,counterparty,"Daftar counterparty aktif saat ini.",formal
+pp_111,counterparty,"Counterparty baru sudah didaftarkan?",question
+pp_112,counterparty,"Tampilkan mutasi rekening Mandiri atas nama Medita Solusi Digital.",formal
+pp_113,counterparty,"Rekening BCA atau Mandiri yang dipakai supplier itu?",question
+pp_114,counterparty,"Cari counterparty dengan nama Creatifyl.",formal
+pp_115,counterparty,"Counterparty mana yang transaksinya paling banyak?",question
+pp_116,counterparty,"Eh, yang Medita Solusi Digital ya, bukan Medita biasa.",casual
+pp_117,counterparty,"Bank apa saja rekening counterparty?",question
+pp_118,counterparty,"Tampilkan detail counterparty untuk proyek Morves.",formal
+pp_119,counterparty,"Vendor server itu siapa namanya?",casual
+pp_120,counterparty,"Nomor rekening counterparty bisa dilihat?",question
+pp_121,currency_fx,"Berapa kurs USD hari ini?",mixed
+pp_122,currency_fx,"Konversi seratus ribu dolar ke rupiah.",formal
+pp_123,currency_fx,"Kurs IDR ke USD sekarang berapa?",mixed
+pp_124,currency_fx,"Seratus ribu rupiah itu kira-kira berapa dolar?",question
+pp_125,currency_fx,"Transaksi dalam USD dicatat dengan kurs apa?",question
+pp_126,currency_fx,"Bandingkan kurs bulan ini sama bulan lalu.",formal
+pp_127,currency_fx,"Eh, maksud saya USD, bukan IDR.",casual
+pp_128,currency_fx,"Berapa selisih kurs sejak awal bulan?",question
+pp_129,currency_fx,"Invoice Creatifyl denominasinya rupiah atau dolar?",question
+pp_130,currency_fx,"Rate EUR juga bisa dilihat?",mixed
+pp_131,currency_fx,"Konversi dua juta rupiah ke dolar pakai kurs tengah.",formal
+pp_132,currency_fx,"Fluktuasi kurs minggu ini gimana?",casual
+pp_133,amount,"Total pendapatan dua ratus lima puluh juta rupiah.",formal
+pp_134,amount,"Laba bersih satu koma lima miliar rupiah.",formal
+pp_135,amount,"Seratus ribu saja.",short
+pp_136,amount,"Bukan juta, miliar.",short
+pp_137,amount,"Dua koma lima persen kenaikan.",formal
+pp_138,amount,"Beban server delapan ratus lima puluh ribu per bulan.",formal
+pp_139,amount,"Berapa pengeluaran server bulan ini?",question
+pp_140,amount,"Nilainya nol koma nol lima.",formal
+pp_141,amount,"Tiga belas juta lima ratus ribu rupiah.",formal
+pp_142,amount,"Eh, bukan ribu, juta.",casual
+pp_143,amount,"Setengah miliar.",short
+pp_144,amount,"Total aset satu koma dua triliun rupiah.",formal
+pp_145,date_time,"Tutup buku periode dua puluh dua September dua ribu dua puluh enam.",formal
+pp_146,date_time,"Transaksi tanggal dua belas September.",formal
+pp_147,date_time,"Dari satu sampai tiga puluh Juni.",formal
+pp_148,date_time,"Bulan lalu aja.",casual
+pp_149,date_time,"Kuartal tiga tahun ini.",formal
+pp_150,date_time,"Tahun dua ribu dua puluh lima dibanding dua ribu dua puluh empat.",formal
+pp_151,date_time,"Eh, maksudnya Oktober, bukan September.",casual
+pp_152,date_time,"Minggu kedua bulan depan.",casual
+pp_153,date_time,"Tanggal jatuh temponya kapan?",question
+pp_154,date_time,"Antara lima belas Agustus dan lima belas September.",formal
+pp_155,date_time,"Akhir tahun lalu.",short
+pp_156,date_time,"Sekarang jam berapa?",question
+pp_157,management,"Berapa pendapatan Morves bulan ini?",formal
+pp_158,management,"Bandingkan pendapatan Medita dan Creatifyl.",formal
+pp_159,management,"Pendapatan Morves Finance kuartal ini naik nggak?",mixed
+pp_160,management,"Bandingin revenue Medita sama Creatifyl.",casual
+pp_161,management,"Berapa ekuitas Morves akhir tahun lalu?",question
+pp_162,management,"Kinerja Medita Solusi Digital bulan ini gimana?",question
+pp_163,management,"Morves atau Medita yang pendapatannya lebih besar?",question
+pp_164,management,"Ringkasan performa bulan ini.",formal
+pp_165,management,"Eh, Morves Finance ya, bukan Morves yang lain.",casual
+pp_166,management,"Pengeluaran terbesar kita apa?",question
+pp_167,management,"Kenaikan biaya tahun ini berapa persen?",question
+pp_168,management,"Kreativitas tim Creatifyl bagus, tapi marginnya gimana?",casual
+pp_169,assistant_query,"Apakah ada transaksi antarperusahaan yang belum cocok?",formal
+pp_170,assistant_query,"Cari transaksi dengan keterangan server.",formal
+pp_171,assistant_query,"Ada tagihan yang terlewat bulan ini?",question
+pp_172,assistant_query,"Ringkasan keuangan singkat bulan ini.",formal
+pp_173,assistant_query,"Semua invoice belum dibayar apa aja?",casual
+pp_174,assistant_query,"Kas kita aman nggak bulan ini?",casual
+pp_175,assistant_query,"Eh, sebentar, saya mau cek piutang dulu.",casual
+pp_176,assistant_query,"Berapa rasio liabilitas terhadap ekuitas per akhir Agustus?",formal
+pp_177,assistant_query,"Ada yang aneh di transaksi minggu ini?",casual
+pp_178,assistant_query,"Tolong tampilkan invoice overdue Creatifyl.",formal
+pp_179,assistant_query,"Rekonsiliasi bank terakhir kapan?",question
+pp_180,assistant_query,"Bisa kasih highlights laporan bulan ini?",mixed

@@ -21,6 +21,8 @@ htmlcov/
 # --- Datasets: raw and processed audio are NEVER committed (privacy) ---
 datasets/raw/**
 datasets/processed/**
+!datasets/raw/.gitkeep
+!datasets/processed/.gitkeep
 datasets/manifests/*.private.*
 datasets/manifests/**/private-*
 datasets/transcripts/*.private.*
