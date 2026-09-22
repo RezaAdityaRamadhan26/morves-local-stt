@@ -1,0 +1,2 @@
+# Keep models directory tracked without committing any weight files.
+# Weights are .gitignored in the root .gitignore.

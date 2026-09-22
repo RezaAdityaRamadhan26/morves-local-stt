@@ -1,0 +1,20 @@
+# Local inference service profile.
+
+service:
+  host: 127.0.0.1            # bind locally; the Morves backend reaches it over the network boundary it owns
+  port: 8000
+  max_upload_mb: 25
+  max_audio_duration_sec: 120
+  allowed_extensions: [".wav"]
+  allowed_mime_prefixes: ["audio/", "application/octet-stream"]
+  log_transcripts: false     # transcript logging disabled by default (privacy)
+  log_audio: false           # raw/base64 audio logging is FORBIDDEN; flag kept only as an explicit deny
+  temp_dir: null             # null -> OS default temp; cleanup is guaranteed in a finally block
+
+model:
+  adapter: faster_whisper
+  model_id: base
+  device: auto
+  compute_type: auto
+  download_root: models
+  default_language: id

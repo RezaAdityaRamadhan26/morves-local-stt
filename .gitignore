@@ -1,0 +1,62 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Environments & caches ---
+.venv/
+venv/
+.env
+.env.*
+.pytest_cache/
+.cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Datasets: raw and processed audio are NEVER committed (privacy) ---
+datasets/raw/**
+datasets/processed/**
+datasets/manifests/*.private.*
+datasets/manifests/**/private-*
+datasets/transcripts/*.private.*
+
+# --- Private evaluation data (local only, never committed) ---
+evaluation/private-manifest.jsonl
+evaluation/private/**
+
+# --- Generated reports (may contain transcripts derived from private audio) ---
+evaluation/reports/*
+!evaluation/reports/.gitkeep
+
+# --- Model weights & artifacts ---
+models/**
+!models/.gitkeep
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.onnx
+*.gguf
+
+# --- Audio files anywhere in the repo ---
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.ogg
+*.opus
+*.aac
+*.wma
+*.aiff
+*.webm
+
+# --- Logs & secrets ---
+*.log
+secrets.*
+tokens.*

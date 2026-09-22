@@ -1,0 +1,26 @@
+# TRAINING PLACEHOLDER — STT-4. NOT ACTIVE in STT-0.
+# Do not run any fine-tuning job from this file yet. Values are planning defaults
+# to be revisited after STT-2 baseline benchmarks and the STT-3 dataset collection.
+
+approach: lora_peft          # full fine-tune is NOT recommended on 4 GB VRAM
+base_model: openai/whisper-small   # whisper-base if VRAM/RAM constrained; decide at STT-4
+training_objective: seq2seq_asr    # standard encoder-decoder cross-entropy on (audio, transcript)
+
+lora:
+  r: 32
+  alpha: 64
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj]
+
+precision: fp16              # Pascal (compute 6.1) has no bf16/tensor cores; keep fp16 or fp32
+batching:
+  per_device_batch_size: 1   # 4 GB VRAM ceiling
+  gradient_accumulation_steps: 8
+  gradient_checkpointing: true
+checkpoints:
+  save_steps: 200
+  eval_steps: 100
+  early_stopping_patience: 5   # evals without improvement before stop
+data:
+  min_speakers: 20            # speaker diversity requirement before training is allowed
+  noise_augmentation: true    # additive noise / RIR only after pilot run is clean

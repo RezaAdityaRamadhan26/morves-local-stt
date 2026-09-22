@@ -1,0 +1,119 @@
+# Morves Finance Domain Lexicon
+# Canonical terms, entities, and vocabulary for Indonesian financial speech-to-text.
+# Format: one canonical term per line. Lines starting with # are comments.
+# Do NOT hardcode pronunciation spellings here. This file is vocabulary planning first.
+
+# --- Morves Entities & Products ---
+Morves
+Morves Finance
+Medita
+Medita Solusi Digital
+Creatifyl
+
+# --- Financial Statements & Core Accounting Concepts ---
+arus kas
+neraca
+neraca saldo
+laba rugi
+ekuitas
+liabilitas
+aset
+pendapatan
+pengeluaran
+beban
+modal
+piutang
+utang
+
+# --- Transactions & Journaling ---
+jurnal
+jurnal umum
+jurnal penyesuaian
+debit
+kredit
+transaksi
+rekening
+bank
+kas
+buku besar
+saldo
+saldo awal
+saldo akhir
+
+# --- Invoices, Payables & Receivables ---
+invoice
+tagihan
+jatuh tempo
+outstanding
+overdue
+termin pembayaran
+bukti potong
+faktur
+faktur pajak
+
+# --- Intercompany & Consolidation ---
+antarperusahaan
+intercompany
+konsolidasi
+eliminasi
+transaksi antarperusahaan
+saldo antarperusahaan
+
+# --- Project & Management Accounting ---
+project
+proyek
+margin
+margin kotor
+margin bersih
+profitabilitas
+anggaran
+budget
+realisasi
+
+# --- Currencies & Monetary Units ---
+IDR
+USD
+Rupiah
+rupiah
+dolar
+ribu
+juta
+miliar
+triliun
+
+# --- Banking & Counterparties ---
+BCA
+Mandiri
+BNI
+BRI
+Bank Syariah Indonesia
+rekening giro
+rekening koran
+
+# --- Time & Periods ---
+bulan ini
+bulan lalu
+kuartal satu
+kuartal dua
+kuartal tiga
+kuartal empat
+tahun berjalan
+tahun lalu
+tanggal
+jatuh tempo
+minggu ini
+hari ini
+
+# --- Actions & Navigation ---
+tampilkan
+lihat
+cari
+buat
+bandingkan
+unduh
+ekspor
+filter
+urutkan
+buka
+hitung
+rekonsiliasi

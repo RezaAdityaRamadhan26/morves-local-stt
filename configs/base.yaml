@@ -1,0 +1,38 @@
+# Base configuration shared by all profiles.
+# Values here are defaults; profile configs (baseline/inference/training) override them.
+
+audio:
+  target_sample_rate: 16000   # canonical input profile: WAV PCM mono 16 kHz 16-bit
+  target_channels: 1
+  subtype: PCM_16
+  max_duration_sec: 600       # hard sanity ceiling for any single dataset utterance
+
+paths:
+  datasets_dir: datasets
+  models_dir: models
+  evaluation_dir: evaluation
+  fixtures_dir: evaluation/fixtures
+
+split:
+  train: 0.8
+  validation: 0.1
+  test: 0.1
+  seed: 42
+  # Splits are SPEAKER-INDEPENDENT. Overlap between any two splits is a hard error.
+
+taxonomy:
+  - general
+  - navigation
+  - cash_flow
+  - transaction
+  - receivable
+  - payable
+  - intercompany
+  - reporting
+  - project
+  - counterparty
+  - currency_fx
+  - amount
+  - date_time
+  - management
+  - assistant_query

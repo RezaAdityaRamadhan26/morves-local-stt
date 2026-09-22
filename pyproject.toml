@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "morves-stt"
+version = "0.1.0"
+description = "Locally deployable Indonesian speech-to-text for Morves Finance terminology. Audio -> local ASR -> transcript. Nothing more."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary - internal Morves use" }
+authors = [{ name = "Morves Engineering" }]
+
+dependencies = [
+    "numpy>=1.26",
+    "soundfile>=0.12.1",
+    "soxr>=0.3.3",
+    "PyYAML>=6.0",
+    "faster-whisper>=1.0.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "httpx>=0.27",
+    "types-PyYAML",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests", "scripts", "service"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "RUF"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "integration: slower tests that exercise multiple components",
+    "model: requires a downloaded ASR model (not run by default in CI)",
+]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+check_untyped_defs = true
+files = ["src/morves_stt", "service", "scripts"]

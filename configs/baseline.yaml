@@ -1,0 +1,25 @@
+# Baseline benchmark profile (STT-0 / STT-2).
+# Runs the selected local ASR adapter over a manifest and produces metric reports.
+
+model:
+  adapter: faster_whisper
+  # whisper size alias (tiny|base|small|medium|large-v2|large-v3|large-v3-turbo|distil-*)
+  # or a Hugging Face repo id of a CTranslate2-converted model.
+  model_id: small
+  # cpu/int8 is the verified STT-0 configuration. device "auto" resolves to cuda
+  # when CT2 reports a CUDA device, but Windows still needs cuBLAS/cuDNN 9 DLLs
+  # for the model to actually load - see docs/HARDWARE-BASELINE.md before switching.
+  device: cpu
+  compute_type: int8
+  download_root: models
+  default_language: id
+
+benchmark:
+  # Benchmark requires REAL speech with references. Point manifest at:
+  #   evaluation/private-manifest.jsonl  (gitignored, local only)
+  manifest: evaluation/private-manifest.jsonl
+  audio_root: .
+  terms_file: evaluation/fixtures/terms.yaml
+  warmup: 1           # utterances transcribed before timing starts
+  limit: null         # optionally cap utterance count
+  output_dir: evaluation/reports
