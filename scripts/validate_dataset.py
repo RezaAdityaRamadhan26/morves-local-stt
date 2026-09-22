@@ -12,6 +12,7 @@ Readiness command (from repo root):
 from __future__ import annotations
 
 import argparse
+import csv
 from pathlib import Path
 
 from morves_stt.dataset import (
@@ -34,10 +35,15 @@ SPLITS = ("train", "validation", "test")
 
 
 def find_missing_audio(entries: list[ManifestEntry], datasets_dir: Path) -> list[str]:
-    """Return manifest audio paths (relative to datasets_dir) with no file."""
+    """Return manifest audio paths with no file on disk.
+
+    Split manifests store datasets/-relative paths; extra private manifests
+    (e.g. evaluation/private-manifest.jsonl) store repo-root-relative paths,
+    so both resolutions are checked.
+    """
     missing: list[str] = []
     for e in entries:
-        if not (datasets_dir / e.audio).exists():
+        if not (datasets_dir / e.audio).exists() and not Path(e.audio).exists():
             missing.append(e.audio)
     return missing
 
@@ -50,6 +56,15 @@ def fmt_hours(counts: dict[str, float]) -> str:
     return ", ".join(f"{k}={v:.2f}h" for k, v in counts.items()) if counts else "(none)"
 
 
+def _find_manifest(manifest_dir: Path, split: str) -> Path | None:
+    """Prefer the private naming (real data); fall back to placeholders."""
+    for candidate in (f"{split}.private.jsonl", f"{split}.jsonl"):
+        p = manifest_dir / candidate
+        if p.exists():
+            return p
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--datasets-dir", type=str, default="datasets")
@@ -58,6 +73,19 @@ def main() -> int:
     parser.add_argument("--min-total-hours", type=float, default=DEFAULT_MIN_TOTAL_HOURS)
     parser.add_argument(
         "--min-per-speaker-minutes", type=float, default=DEFAULT_MIN_PER_SPEAKER_MINUTES
+    )
+    parser.add_argument(
+        "--extra-manifest",
+        action="append",
+        default=[],
+        help="Additional private manifest JSONL (e.g. evaluation/private-manifest.jsonl) "
+        "counted toward pilot statistics before splits exist",
+    )
+    parser.add_argument(
+        "--anchors",
+        type=str,
+        default="datasets/recording-pack/anchor-prompts.csv",
+        help="Anchor prompts CSV with a 'covers' column (critical terms)",
     )
     args = parser.parse_args()
 
@@ -68,9 +96,9 @@ def main() -> int:
     schema_errors: list[str] = []
 
     for name in SPLITS:
-        path = manifest_dir / f"{name}.jsonl"
-        if not path.exists():
-            print(f"WARNING: {path} not found (skipping)")
+        path = _find_manifest(manifest_dir, name)
+        if path is None:
+            print(f"WARNING: no {name} manifest found (skipping)")
             continue
         try:
             loaded[name] = load_manifest(path)
@@ -97,20 +125,44 @@ def main() -> int:
         print(f"\nFAIL: {exc}")
 
     all_entries = [e for name in SPLITS for e in loaded.get(name, [])]
-    missing = find_missing_audio(all_entries, root)
+    extra_entries: list[ManifestEntry] = []
+    for extra in args.extra_manifest:
+        p = Path(extra)
+        if not p.exists():
+            schema_errors.append(f"{p.name}: not found")
+            continue
+        try:
+            extra_entries.extend(load_manifest(p))
+        except ManifestValidationError as exc:
+            schema_errors.append(f"{p.name}: {exc}")
+    combined = all_entries + extra_entries
+    missing = find_missing_audio(combined, root)
+
+    anchors_path = Path(args.anchors)
+    anchor_terms: list[str] = []
+    if anchors_path.exists():
+        with anchors_path.open("r", encoding="utf-8-sig", newline="") as f:
+            for row in csv.DictReader(f):
+                terms = (row.get("covers") or "").split(";")
+                anchor_terms.extend(t.strip() for t in terms if t.strip())
+        anchor_terms = sorted(set(anchor_terms))
+    else:
+        print(f"note: anchors file not found ({anchors_path}) - anchor coverage skipped")
 
     stats = collect_stats(
-        all_entries,
+        combined,
         test_entries=loaded.get("test", []),
         missing_audio=missing,
         speaker_overlap=overlap_errors,
         schema_errors=schema_errors,
+        anchor_terms=anchor_terms,
     )
 
-    if not all_entries and not schema_errors:
+    if not combined and not schema_errors:
         print(
             "\nno manifest entries found - manifests are placeholders. "
-            "Record speakers, run prepare_manifest.py, then rerun."
+            "Record speakers, run ingest_speaker_batch.py / prepare_manifest.py, "
+            "then rerun."
         )
 
     # Report.
@@ -124,6 +176,9 @@ def main() -> int:
     print(f"recording profiles: {fmt_counts(stats.recording_profiles)}")
     print(f"noise profiles: {fmt_counts(stats.noise_profiles)}")
     print(f"languages: {fmt_counts(stats.language_counts)}")
+    if stats.anchor_term_speakers:
+        cov = ", ".join(f"{t}={len(s)}" for t, s in sorted(stats.anchor_term_speakers.items()))
+        print(f"anchor term coverage (speakers each): {cov}")
     if stats.synthetic_in_test:
         print(
             f"POLICY VIOLATION: test split has {stats.synthetic_in_test} synthetic "

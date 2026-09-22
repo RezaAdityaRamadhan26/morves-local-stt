@@ -90,7 +90,9 @@ def main() -> int:
         return 1
 
     for name in SPLITS:
-        out = datasets_dir / "manifests" / f"{name}.jsonl"
+        # Private naming: generated manifests hold real transcript references
+        # and are gitignored (datasets/manifests/*.private.*).
+        out = datasets_dir / "manifests" / f"{name}.private.jsonl"
         save_manifest(groups[name], out)
         n = len(groups[name])
         h = sum(e.duration_sec for e in groups[name]) / 3600

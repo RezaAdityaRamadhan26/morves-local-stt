@@ -114,6 +114,20 @@ def prevent_clipping(audio: np.ndarray, peak_limit: float = 0.95) -> np.ndarray:
     return audio
 
 
+def peak_dbfs(audio: np.ndarray) -> float:
+    """Peak level in dBFS (-inf for digital silence)."""
+    peak = float(np.max(np.abs(audio))) if audio.size > 0 else 0.0
+    return 20.0 * float(np.log10(peak)) if peak > 0 else float("-inf")
+
+
+def rms_dbfs(audio: np.ndarray) -> float:
+    """RMS level in dBFS (-inf for digital silence)."""
+    if audio.size == 0:
+        return float("-inf")
+    rms = float(np.sqrt(np.mean(np.square(audio, dtype=np.float64))))
+    return 20.0 * float(np.log10(rms)) if rms > 0 else float("-inf")
+
+
 def normalize_to_canonical_wav(
     input_path: str | Path,
     output_path: str | Path,

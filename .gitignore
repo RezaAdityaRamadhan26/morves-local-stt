@@ -62,3 +62,8 @@ models/**
 *.log
 secrets.*
 tokens.*
+
+# generated manifests/transcripts are private (STT-1C)
+# ALL generated manifests contain private transcript references - never commit.
+datasets/manifests/*.jsonl
+datasets/transcripts/*.csv
